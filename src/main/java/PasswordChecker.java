@@ -3,24 +3,24 @@ public class PasswordChecker {
     public static void main(String[] args){
 
         String password = "!12DWEgjdjkbvks";
-        passwordIsOk(password);
+
         try {
             passwordIsValid(password);
         }catch(Exception e){
             System.out.println(e);
         }
-
-        passwordIsNeverOk(password);
-
-    }
-    public static String passwordIsOk(String password) {
-        String msg = "";
-        if ((password.isEmpty() != true) && (password.length() >= 8) && (password.matches(".*[a-z].*"))) {
-            msg ="true";
+        try {
+            passwordIsOk(password);
+        }catch(Exception e){
+            System.out.println(e);
         }
-        else {msg= "False";}
-        System.out.println(msg);
-        return msg;
+        try {
+            passwordIsNeverOk(password);
+        }catch(Exception e){
+            System.out.println(e);
+        }
+
+
     }
     public static void passwordIsValid(String password) throws Exception {
         int check = 0;
@@ -28,20 +28,15 @@ public class PasswordChecker {
             if (password.isEmpty()) {
                 msg = "password should exist";
                 throw new Exception(msg);
-//                 ;
-//                System.out.println(msg);
             } else {
                 check += 1;
             }
             if (password.length() < 8) {
                 msg = "password should be longer than than 8 characters";
                 throw new Exception(msg);
-
             } else {
                 check += 1;
-//                System.out.println( msg);
             }
-
             if (password.matches(".*[a-z].*")) {
                 check += 1;
             } else {
@@ -64,18 +59,31 @@ public class PasswordChecker {
             } else {
                 System.out.println("password should have at least one special character");
             }
-            if (check > 4) {
+            if (check > 5) {
                 msg = "Password is valid";
                 System.out.println(msg);
             }
         }
+    public static String passwordIsOk(String password) throws Exception {
+        boolean msg;
 
-
-    public static String passwordIsNeverOk(String password) {
+            if(password.isEmpty() || password.length() <8 || password.matches(".*[a-z].*")!= true ){
+                msg = false;
+                throw new Exception(String.valueOf(msg));
+            }
+            else {
+                msg = true;
+            }
+        System.out.println(msg);
+        return password;
+    }
+    public static String passwordIsNeverOk(String password) throws Exception {
         String msg = "";
-        if (password.isEmpty() && password.length() <= 8) {
+        if (password.isEmpty() || password.length() <= 8) {
             msg = "Password is not okay";
+            throw new Exception(msg);
         }
+        else {msg = "Password is Okay";}
         System.out.println(msg);
         return msg;
     }
